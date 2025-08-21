@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Mario Clicker</title>
+    <style>
+@keyframes hovereffect {
+    from {transform: scale(100%); background-color: rgb(227, 227, 125);}
+    to {transform: scale(105%); background-color: rgb(206, 206, 117);}
+}
+@keyframes activation {
+    0% {transform: scale(100%);}
+    30% {transform: scale(110%);}
+    100% {transform: scale(100%);}
+}
+@keyframes changecolor {
+    from {transform: scale(100%); border: 5px solid rgb(197, 159, 112);}
+    to {transform: scale(105%); border: 5px solid rgb(125, 121, 85);}
+}
+body {
+    background: linear-gradient(rgb(162, 165, 94), rgb(161, 165, 125), rgb(175, 202, 137));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+h1 {
+    border: 5px solid;
+    border-color: rgb(170, 118, 55);
+    text-align: center;
+    background-color: rgb(189, 164, 132);
+    font-family: "Barlow", serif;
+    color: rgb(160, 92, 8);
+    border-radius: 10px;
+}
+.paragraph {
+    border: 3px solid;
+    border-color: rgb(204, 130, 41);
+    background-color: rgb(255, 206, 114);
+    font-family: "Barlow", serif;
+    font-weight: 600;
+    color: rgb(175, 103, 15);
+    text-align: center;
+    border-radius: 10px;
+}
+i {
+    font-size: 65px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(227, 227, 125);
+    color: rgb(70, 74, 51);
+    width: 4rem;
+    height: 4rem;
+    padding: 5px;
+    border: 5px solid rgb(127, 88, 39);
+    border-radius: 10px;
+    float: left;
+}
+i:hover {
+    animation: hovereffect 0.1s ease-in forwards;
+}
+i:active {
+    animation: activation 0.15s ease-in-out forwards;
+}
+.store {
+    background-color: rgb(146, 89, 19);
+    width: 98%;
+    max-width: 30rem;
+    height: 25rem;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+    border: 3px solid rgb(84, 83, 68);
+    overflow-y: scroll;
+}
+.store::-webkit-scrollbar {
+    width: 12px;
+}
+.store::-webkit-scrollbar-track {
+    background-color: bisque;
+    border-radius: 10px;
+    border: 3px solid rgb(209, 168, 119);
+}
+button {
+    background-color: bisque;
+    border: 5px solid rgb(197, 159, 112);
+    width: 6rem;
+    height: 6rem;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-family: "Barlow", serif;
+    font-weight: 600;
+    color: rgb(123, 91, 53);
+    border-radius: 10px;
+}
+button:hover {
+    animation: changecolor 0.2s ease-in-out forwards;
+}
+button:active {
+    animation: activation 0.2s ease-in-out forwards;
+}
+    </style>
+</head>
+<body>
+    <h1>Mario Clicker Simulator</h1>
+    <p class="paragraph" id="counter">0 Mario Clicks</p>
+    <p class="paragraph" id="cpc">1 Click Per Click</p>
+    <div class="store">
+        <button id="upg1">+1 CPC (50C)</button>
+        <button id="upg2">+5 CPC (250C)</button>
+        <button id="upg3">DarknessYT (1000C)</button>
+        <button id="upg4">Zavideni (5000C)</button>
+        <button id="upg5">Mario (25000C)</button>
+        <button id="upg6">Stalin (100KC)</button>
+        <button id="upg7">Vali Vijelie (1MC)</button>
+        <button id="upg8">+1 CPC all (50C)</button>
+        <button id="upg9">+5 CPC all (250C)</button>
+        <button id="upg10">DarknessYT all (1000C)</button>
+        <button id="upg11">Zavideni all (5000C)</button>
+        <button id="upg12">Mario all (25KC)</button>
+        <button id="upg13">Stalin all (100KC)</button>
+        <button id="upg14">Vali Vijelie all (1MC)</button>
+        <button id="upg15">Secret (500MC)</button>
+    </div>
+    <i id="click" class="fa-solid fa-arrow-pointer"></i>
+    <script>
+const image = document.getElementById('click');
+const counter = document.getElementById('counter');
+const clickperclick = document.getElementById('cpc');
+const buttons = Array.from({length: 15}, (_, i) => document.getElementById('upg' + (i+1)));
+const amounts = [50, 250, 1000, 5000, 25000, 100000, 1000000, 50, 250, 1000, 5000, 25000, 100000, 1000000, 500000000];
+let clicks = 0;
+let cpc = 1;
+
+function updatecpc() {
+    clickperclick.textContent = cpc + (cpc === 1 ? ' Click Per Click' : ' Clicks Per Click');
+}
+function updateCounter() {
+    counter.textContent = clicks + ' Mario Clicks';
+}
+updatecpc();
+
+image.addEventListener('click', () => {
+    clicks += cpc;
+    updateCounter();
+});
+buttons[0].addEventListener('click', () => { if (clicks >= amounts[0]) { clicks -= amounts[0]; cpc += 1; updateCounter(); updatecpc(); }});
+buttons[1].addEventListener('click', () => { if (clicks >= amounts[1]) { clicks -= amounts[1]; cpc += 5; updateCounter(); updatecpc(); }});
+buttons[2].addEventListener('click', () => { if (clicks >= amounts[2]) { clicks -= amounts[2]; cpc += 25; updateCounter(); updatecpc(); }});
+buttons[3].addEventListener('click', () => { if (clicks >= amounts[3]) { clicks -= amounts[3]; cpc += 150; updateCounter(); updatecpc(); }});
+buttons[4].addEventListener('click', () => { if (clicks >= amounts[4]) { clicks -= amounts[4]; cpc += 1000; updateCounter(); updatecpc(); }});
+buttons[5].addEventListener('click', () => { if (clicks >= amounts[5]) { clicks -= amounts[5]; cpc += 5000; updateCounter(); updatecpc(); }});
+buttons[6].addEventListener('click', () => { if (clicks >= amounts[6]) { clicks -= amounts[6]; cpc += 25000; updateCounter(); updatecpc(); }});
+buttons[7].addEventListener('click', () => { if (clicks >= amounts[7]) { let n = Math.floor(clicks/amounts[7]); clicks -= n*amounts[7]; cpc += n*1; updateCounter(); updatecpc(); }});
+buttons[8].addEventListener('click', () => { if (clicks >= amounts[8]) { let n = Math.floor(clicks/amounts[8]); clicks -= n*amounts[8]; cpc += n*5; updateCounter(); updatecpc(); }});
+buttons[9].addEventListener('click', () => { if (clicks >= amounts[9]) { let n = Math.floor(clicks/amounts[9]); clicks -= n*amounts[9]; cpc += n*25; updateCounter(); updatecpc(); }});
+buttons[10].addEventListener('click', () => { if (clicks >= amounts[10]) { let n = Math.floor(clicks/amounts[10]); clicks -= n*amounts[10]; cpc += n*150; updateCounter(); updatecpc(); }});
+buttons[11].addEventListener('click', () => { if (clicks >= amounts[11]) { let n = Math.floor(clicks/amounts[11]); clicks -= n*amounts[11]; cpc += n*1000; updateCounter(); updatecpc(); }});
+buttons[12].addEventListener('click', () => { if (clicks >= amounts[12]) { let n = Math.floor(clicks/amounts[12]); clicks -= n*amounts[12]; cpc += n*5000; updateCounter(); updatecpc(); }});
+buttons[13].addEventListener('click', () => { if (clicks >= amounts[13]) { let n = Math.floor(clicks/amounts[13]); clicks -= n*amounts[13]; cpc += n*25000; updateCounter(); updatecpc(); }});
+buttons[14].addEventListener('click', () => { if (clicks >= amounts[14]) { clicks -= amounts[14];; updateCounter(); }});
+    </script>
+</body>
+</html>
